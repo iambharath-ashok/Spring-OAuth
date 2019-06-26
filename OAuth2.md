@@ -56,7 +56,7 @@
 	-	Resource Server – store user’s data and http services which can return user data to authenticated clients.
 	-	Authorization Server – responsible for authenticating user’s identity and gives an authorization token. This token is accepted by resource server and validate your identity.
 
-![OAuth2](https://cdn2.bharath.com/wp-content/uploads/2019/04/Oauth2-Flow.png)
+(https://cdn2.bharath.com/wp-content/uploads/2019/04/Oauth2-Flow.png)
 
 
 ##	Access Token vs Refresh Token
@@ -188,3 +188,39 @@
 
 ## Testing 
 
+
+-	When we tri to access http://localhost:8080/api/users/me resource
+	-	 it will bring login screen 
+	-	Enter credentials
+	
+-	http://localhost:8080/oauth/authorize?client_id=clientapp&response_type=code&scope=read_profile_info
+-	It will redirect to a URL like : http://localhost:8081/login?code=EAR76A. Here 'EAR76A' is authorization code for the third party application.
+-	Get access token from authorization server
+
+				http://localhost:8080/oauth/token
+ 
+				Headers:
+				 
+				Content-Type: application/x-www-form-urlencoded
+				authorization: Basic Y2xpZW50YXBwOjEyMzQ1Ng==
+				 
+				Form data - application/x-www-form-urlencoded:
+				 
+				grant_type=authorization_code
+				code=EAR76A
+				redirect_uri=http://localhost:8081/login
+				
+				
+-	Authorization server will get token in response
+			
+			{
+				"access_token": "59ddb16b-6943-42f5-8e2f-3acb23f8e3c1",
+				"token_type": "bearer",
+				"refresh_token": "cea0aa8f-f732-44fc-8ba3-5e868d94af64",
+				"expires_in": 4815,
+				"scope": "read_profile_info"
+			}
+-	Access user data from resource server
+
+		curl -X GET http://localhost:8080/api/users/me
+			-H "authorization: Bearer 59ddb16b-6943-42f5-8e2f-3acb23f8e3c1"
