@@ -56,7 +56,7 @@
 	-	Resource Server – store user’s data and http services which can return user data to authenticated clients.
 	-	Authorization Server – responsible for authenticating user’s identity and gives an authorization token. This token is accepted by resource server and validate your identity.
 
-(https://cdn2.bharath.com/wp-content/uploads/2019/04/Oauth2-Flow.png)
+![](https://cdn2.bharath.com/wp-content/uploads/2019/04/Oauth2-Flow.png)
 
 
 ##	Access Token vs Refresh Token
